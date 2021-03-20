@@ -22,11 +22,18 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
         
-     - name: Build
-       run: dotnet build --configuration Release --no-restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
        
-     - name: Test
-
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
+      
+      - name: Dotnet Publish
+        uses: actions/upload-artifact@v1
+        with: 
+          name: app
+          path: ${{ github.workspace}}//demo
+      
       - name: Run a one-line script
         run: echo Hello, world!
 
