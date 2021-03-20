@@ -36,3 +36,31 @@ jobs:
         with: 
           name: app
           path: ${{ github.workspace}}//demo
+
+deploy-dev-app:
+    name: Deploy Dev App
+    runs-on: ubuntu-latest
+    
+    environment:
+      name: dev
+      
+    needs: build
+    steps: 
+      - name: Download App
+        uses: actions/download-artifact@v2
+        with:
+          name: app
+          path: ${{ github.workspace }}//app
+          
+      - name: Azure Login
+        uses: azure/login@v1
+        with: 
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: "Run Azure webapp deploy action using profile credentials"
+        uses: azure/webapp-deploy@v2
+        id: app-web
+        with: 
+          app-name: '${{ secrets.RESOURCE_PREFIX}}-appservice'
+          package: '${{ github.workspace }}/app'
+  
