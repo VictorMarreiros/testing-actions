@@ -37,7 +37,7 @@ jobs:
           name: app
           path: ${{ github.workspace}}//demo
 
-deploy-dev-app:
+  deploy-dev-app:
     name: Deploy Dev App
     runs-on: ubuntu-latest
     
